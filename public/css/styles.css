@@ -4,3 +4,103 @@
 *:after {
   box-sizing: border-box;
 }
+body {
+  font-family: "Open Sans", sans-serif;
+}
+.text {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  text-align: left;
+  color: #00BCD4;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+.up{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.sticker img{
+ border: 8px solid #00BCD4;
+ background-color: #00BCD4;
+ height: 150px;
+ width: 150px;
+}
+.flame img {
+  border: 8px solid #00BCD4;
+  background-color: #00BCD4;
+  height: 150px;
+  width: 150px;
+}
+.flux img {
+  border: 8px solid #00BCD4;
+  background-color: #00BCD4;
+  height: 150px;
+  width: 150px;
+}
+.hub img {
+  border: 8px solid #00BCD4;
+  background-color: #00BCD4;
+  height: 150px;
+  width: 150px;
+}
+.navigation ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation ul li a {
+  display: block;
+  padding: .8rem 10px;
+  text-decoration: none;
+  border-bottom: 1px solid #dddddd;
+  color: #ffffff;
+ 
+}
+.navigation {
+  display: block;
+ border: 1px solid #dddddd;
+ background-color: #333333;
+ color: #ffffff;
+
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.nav-list li {
+  flex: 1 1 auto;
+  
+}
+
+.navigation ul {
+  display: flex;
+}
+
+.navigation a {
+  border: none;
+}
+#top-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+#top-header #tools {
+  position: relative;
+  top: -10px;
+  right: auto;
+  gap: 20px;
+}
+.dislist li {
+  font-size: 2.5rem;
+}

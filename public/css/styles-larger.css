@@ -1,0 +1,12 @@
+@media screen and (min-width: 38rem){
+ .coast {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+ }
+ .coast section:first-child {
+    order: 2;
+ }
+ .coast section:last-child {
+    order: 1;
+ }
+}
