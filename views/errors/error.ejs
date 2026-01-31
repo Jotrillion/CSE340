@@ -1,0 +1,17 @@
+<%# Heading: use the title passed to the view %>
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <div class="error-container">
+            <p class="error-message">
+                <%= message %>
+            </p>
+            <p class="error-help">Please try one of the following:</p>
+            <ul class="error-suggestions">
+                <li><a href="/" title="Return to home page">Return to Home Page</a></li>
+                <li><a href="javascript:history.back()" title="Go back to previous page">Go Back</a></li>
+            </ul>
+        </div>

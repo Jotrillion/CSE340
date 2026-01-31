@@ -9,4 +9,30 @@
  .coast section:last-child {
     order: 1;
  }
+
+/* Inventory Detail - Large Screen - Side by Side Layout */
+#inv-detail-container {
+   flex-direction: row;
+   align-items: flex-start;
+   gap: 3rem;
+}
+
+.vehicle-image {
+   flex: 0 1 50%;
+   max-width: 50%;
+}
+
+.vehicle-details {
+   flex: 0 1 50%;
+   max-width: 50%;
+}
+
+.vehicle-title {
+   font-size: 2.5rem;
+}
+
+.vehicle-price {
+   font-size: 2.5rem;
+}
+
 }

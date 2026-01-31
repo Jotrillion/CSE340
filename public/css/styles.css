@@ -104,3 +104,148 @@ body {
 .dislist li {
   font-size: 2.5rem;
 }
+
+/* Inventory Detail Styles */
+#inv-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.vehicle-image {
+  width: 100%;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+.vehicle-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  color: #333;
+}
+
+.vehicle-price {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #2c5f2d;
+  margin: 1rem 0 2rem 0;
+}
+
+.vehicle-key-specs {
+  background-color: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #2c5f2d;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.spec-label {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.spec-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 0.5rem;
+}
+
+.vehicle-description {
+  background-color: #fafafa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.vehicle-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #555;
+  margin: 0;
+}
+
+.vehicle-specs-table {
+  margin-top: 1.5rem;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+}
+
+.spec-row .spec-label {
+  font-weight: bold;
+  color: #666;
+  font-size: 1rem;
+}
+
+.spec-row .spec-value {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Error Page Styles */
+.error-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: #721c24;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.error-help {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.error-suggestions {
+  list-style: none;
+  padding: 0;
+}
+
+.error-suggestions li {
+  margin: 0.5rem 0;
+}
+
+.error-suggestions a {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.error-suggestions a:hover {
+  text-decoration: underline;
+}
