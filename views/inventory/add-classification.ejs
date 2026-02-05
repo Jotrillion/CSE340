@@ -1,0 +1,96 @@
+<style>
+  h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+  form {
+    background-color: #007BFF;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 450px;
+    margin: 0 auto 20px;
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  form label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #0056b3;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: #333;
+  }
+  form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    font-size: 16px;
+  }
+  form button:hover {
+    background-color: #003d82;
+  }
+  ul.notice {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  ul.notice li {
+    margin-bottom: 5px;
+  }
+</style>
+
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<% if (locals.notice) { %>
+  <p class="notice"><%= locals.notice %></p>
+<% } %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form action="/inv/add-classification" method="post">
+  <label for="classification_name">Classification Name</label>
+  <span>Classification name cannot contain spaces or special characters. Only letters (A-Z, a-z) and numbers (0-9) are allowed.</span>
+  <input
+    type="text"
+    id="classification_name"
+    name="classification_name"
+    required
+    pattern="^[A-Za-z0-9]+$"
+    title="Classification name cannot contain spaces or special characters."
+    value="<%= locals.classification_name || '' %>"
+  />
+
+  <button type="submit">Add Classification</button>
+</form>

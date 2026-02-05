@@ -1,0 +1,105 @@
+<style>
+    h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    p {
+        text-align: center;
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+    form {
+        background-color: #007BFF;
+        padding: 30px;
+        border-radius: 8px;
+        max-width: 450px;
+        margin: 0 auto 20px;
+        color: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    form label {
+        display: block;
+        margin-top: 15px;
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    form input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #0056b3;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+        color: #333;
+    }
+    form span {
+        display: block;
+        margin-bottom: 15px;
+        font-size: 12px;
+        background-color: rgba(0, 0, 0, 0.15);
+        padding: 12px;
+        border-radius: 4px;
+        line-height: 1.5;
+    }
+    form button {
+        width: 100%;
+        padding: 12px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 15px;
+        font-size: 16px;
+    }
+    form button:hover {
+        background-color: #003d82;
+    }
+    .account-link {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .account-link a {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .account-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<h1>Login</h1>
+<p>Please log in to your account.</p>
+
+<% if (locals.notice) { %>
+  <p class="notice"><%= locals.notice %></p>
+<% } %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form id="loginForm" action="/account/login" method="post">
+    <label for="accountEmail">Email:</label>
+    <input type="email" name="account_email" id="accountEmail" required value="<%= locals.account_email %>">
+
+    <label for="accountPassword">Password:</label>
+    <span>Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+    <input type="password" name="account_password" id="accountPassword" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+
+    <button type="submit">Login</button>
+</form>
+
+<div class="account-link">
+    <p>Don't have an account? <a href="/account/register">Register here</a></p>
+</div>

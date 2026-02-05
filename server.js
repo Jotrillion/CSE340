@@ -11,6 +11,7 @@ const env = require("dotenv").config()
 const app = express()
 const static = require("./routes/static")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/")
 const baseController = require("./controllers/baseController")
 
@@ -21,6 +22,11 @@ app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout") // not at views root
 
+/* ***********************
+ * Middleware
+ * ************************/
+app.use(express.json())
+app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 
 /* ***********************
@@ -30,6 +36,7 @@ app.use(static)
 // index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
+app.use("/account", accountRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
