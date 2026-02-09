@@ -14,7 +14,9 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/")
 const baseController = require("./controllers/baseController")
-
+const cookieParser = require("cookie-parser")
+const session = require("express-session")
+const flash = require("connect-flash")
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -27,7 +29,18 @@ app.set("layout", "./layouts/layout") // not at views root
  * ************************/
 app.use(express.json())
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-
+app.use(cookieParser())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+}))
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.notice = req.flash("notice")
+  next()
+})
+app.use(utilities.checkJWTToken)
 
 /* ***********************
  * Routes

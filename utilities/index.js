@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 const invModel = require("../models/inventory-model")
 const Util = {}
 
@@ -48,6 +50,54 @@ Util.buildClassificationList = async function (classification_id = null) {
  * General Error Handling
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+ if (req.cookies.jwt) {
+  jwt.verify(
+   req.cookies.jwt,
+   process.env.ACCESS_TOKEN_SECRET,
+   function (err, accountData) {
+    if (err) {
+     req.flash("Please log in")
+     res.clearCookie("jwt")
+     return res.redirect("/account/login")
+    }
+    res.locals.accountData = accountData
+    res.locals.loggedin = 1
+    next()
+   })
+ } else {
+  next()
+ }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+Util.checkLogin = (req, res, next) => {
+ if (res.locals.loggedin) {
+  next()
+ } else {
+  req.flash("notice", "Please log in.")
+  return res.redirect("/account/login")
+ }
+}
+
+/* ****************************************
+ *  Check for Employee or Admin Account Type
+ * ************************************ */
+Util.checkEmployeeOrAdmin = (req, res, next) => {
+ if (res.locals.accountData && (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin")) {
+  next()
+ } else {
+  req.flash("notice", "You do not have permission to access this resource. Please log in with an Employee or Admin account.")
+  return res.redirect("/account/login")
+ }
+}
+
 module.exports = Util
 
 

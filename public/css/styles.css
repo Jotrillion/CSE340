@@ -249,3 +249,67 @@ body {
 .error-suggestions a:hover {
   text-decoration: underline;
 }
+
+/* Inventory Management Styles */
+#classificationList {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+}
+
+#inventoryDisplay thead {
+  background-color: #333;
+  color: #fff;
+}
+
+#inventoryDisplay thead th {
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: bold;
+}
+
+#inventoryDisplay tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#inventoryDisplay tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+#inventoryDisplay tbody td {
+  padding: 0.75rem;
+}
+
+#inventoryDisplay a {
+  color: #0056b3;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+}
+
+#inventoryDisplay a:hover {
+  text-decoration: underline;
+  color: #003d82;
+}
+
+noscript {
+  display: block;
+  padding: 1rem;
+  background-color: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  margin-top: 1rem;
+  color: #856404;
+  font-weight: 500;
+}

@@ -1,0 +1,96 @@
+<style>
+    .account-management {
+        max-width: 600px;
+        margin: 0;
+        padding: 30px 30px 30px 0;
+    }
+    
+    .account-management h1 {
+        text-align: left;
+        color: #333;
+        margin-bottom: 20px;
+    }
+    
+    .account-management h2 {
+        text-align: left;
+        color: #007BFF;
+        margin: 20px 0;
+    }
+    
+    .account-management h3 {
+        color: #333;
+        margin: 30px 0 10px 0;
+        border-bottom: 2px solid #007BFF;
+        padding-bottom: 5px;
+    }
+    
+    .account-management p {
+        margin: 15px 0;
+    }
+    
+    .account-management a {
+        color: #007BFF;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .account-management .update-account-link {
+        text-decoration: underline;
+    }
+    
+    .account-management a:hover {
+        text-decoration: underline;
+    }
+    
+    .welcome-message {
+        text-align: left;
+        font-size: 18px;
+        color: #007BFF;
+        padding: 20px;
+        background-color: #f0f8ff;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+    
+    .notice {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 15px;
+        border: 1px solid #c3e6cb;
+        border-radius: 4px;
+        margin: 20px 0;
+        font-weight: 500;
+    }
+    
+    .notice.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #f5c6cb;
+    }
+</style>
+
+<div class="account-management">
+    <h1>Account Management</h1>
+    
+    <% if (locals.notice && locals.notice.length > 0) { %>
+        <p class="notice"><%= locals.notice %></p>
+    <% } %>
+    
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+    
+    <h2>Welcome <%= locals.accountData.account_firstname %></h2>
+    <p class="welcome-message">You are logged in.</p>
+    
+    <p><a class="update-account-link" href="/account/update/<%= locals.accountData.account_id %>">Update Account Information</a></p>
+    
+    <% if (locals.accountData.account_type === "Employee" || locals.accountData.account_type === "Admin") { %>
+        <h3>Inventory Management</h3>
+        <p><a href="/inv/">Manage Inventory</a></p>
+    <% } %>
+</div>
