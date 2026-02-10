@@ -19,6 +19,7 @@
     "express-session": "^1.19.0",
     "express-validator": "^7.3.1",
     "html-validate": "^10.5.0",
+    "jsonwebtoken": "^9.1.2",
     "pg": "^8.8.0",
     "stylelint": "^16.26.1"
   },
