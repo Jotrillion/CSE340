@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 const Util = {}
 
 /* ************************
@@ -97,6 +98,133 @@ Util.checkEmployeeOrAdmin = (req, res, next) => {
   return res.redirect("/account/login")
  }
 }
+
+/* **************************************
+* Build the reviews HTML for vehicle detail page
+* ************************************ */
+Util.buildReviewsHTML = async function(reviews, reviewStats, accountData, inv_id) {
+  let html = '<div class="reviews-section">'
+  html += '<h3>Customer Reviews</h3>'
+  
+  // Display average rating
+  if (reviewStats.review_count > 0) {
+    const avgRating = parseFloat(reviewStats.average_rating).toFixed(1)
+    html += '<div class="review-summary">'
+    html += '<span class="average-rating">' + avgRating + ' / 5</span>'
+    html += '<span class="review-count">(' + reviewStats.review_count + ' review' + (reviewStats.review_count > 1 ? 's' : '') + ')</span>'
+    html += '<div class="stars">' + Util.buildStars(avgRating) + '</div>'
+    html += '</div>'
+  } else {
+    html += '<p>No reviews yet. Be the first to review this vehicle!</p>'
+  }
+  
+  // Review form (only if logged in)
+  if (accountData) {
+    html += '<div class="review-form">'
+    html += '<h4>Write a Review</h4>'
+    html += '<form action="/review/add" method="post">'
+    html += '<input type="hidden" name="inv_id" value="' + inv_id + '">'
+    html += '<div class="form-group">'
+    html += '<label for="review_rating">Rating:</label>'
+    html += '<select id="review_rating" name="review_rating" required>'
+    html += '<option value="">Select a rating</option>'
+    html += '<option value="5">5 - Excellent</option>'
+    html += '<option value="4">4 - Very Good</option>'
+    html += '<option value="3">3 - Good</option>'
+    html += '<option value="2">2 - Fair</option>'
+    html += '<option value="1">1 - Poor</option>'
+    html += '</select>'
+    html += '</div>'
+    html += '<div class="form-group">'
+    html += '<label for="review_text">Your Review:</label>'
+    html += '<textarea id="review_text" name="review_text" rows="4" required placeholder="Share your experience with this vehicle..." minlength="10" maxlength="1000"></textarea>'
+    html += '</div>'
+    html += '<button type="submit" class="submit-review-btn">Submit Review</button>'
+    html += '</form>'
+    html += '</div>'
+  } else {
+    html += '<p><a href="/account/login">Log in</a> to write a review.</p>'
+  }
+  
+  // Display reviews
+  if (reviews.length > 0) {
+    html += '<div class="reviews-list">'
+    reviews.forEach(review => {
+      html += '<div class="review-item">'
+      html += '<div class="review-header">'
+      html += '<span class="reviewer-name">' + review.account_firstname + ' ' + review.account_lastname.charAt(0) + '.</span>'
+      html += '<span class="review-rating">' + Util.buildStars(review.review_rating) + '</span>'
+      html += '<span class="review-date">' + new Date(review.review_date).toLocaleDateString() + '</span>'
+      html += '</div>'
+      html += '<div class="review-body">'
+      html += '<p>' + review.review_text + '</p>'
+      html += '</div>'
+      html += '</div>'
+    })
+    html += '</div>'
+  }
+  
+  html += '</div>'
+  return html
+}
+
+/* **************************************
+* Build star rating HTML
+* ************************************ */
+Util.buildStars = function(rating) {
+  let stars = ''
+  const fullStars = Math.floor(rating)
+  const hasHalfStar = (rating % 1) >= 0.5
+  
+  for (let i = 0; i < fullStars; i++) {
+    stars += '★'
+  }
+  if (hasHalfStar) {
+    stars += '☆'
+  }
+  const emptyStars = 5 - Math.ceil(rating)
+  for (let i = 0; i < emptyStars; i++) {
+    stars += '☆'
+  }
+  
+  return stars
+}
+
+/* **************************************
+* Build user reviews HTML for account page
+* ************************************ */
+Util.buildUserReviewsHTML = function(reviews) {
+  let html = '<div class="user-reviews-section">'
+  
+  if (reviews.length === 0) {
+    html += '<p>You haven\'t written any reviews yet.</p>'
+  } else {
+    html += '<ul class="user-reviews-list">'
+    reviews.forEach(review => {
+      html += '<li class="user-review-item">'
+      html += '<div class="review-vehicle-info">'
+      html += '<h3>' + review.inv_year + ' ' + review.inv_make + ' ' + review.inv_model + '</h3>'
+      html += '<span class="review-rating">' + Util.buildStars(review.review_rating) + ' (' + review.review_rating + '/5)</span>'
+      html += '<span class="review-date">' + new Date(review.review_date).toLocaleDateString() + '</span>'
+      html += '</div>'
+      html += '<p class="review-text">' + review.review_text + '</p>'
+      html += '<div class="review-actions">'
+      html += '<a href="/review/edit/' + review.review_id + '" class="btn-edit">Edit</a>'
+      html += '<a href="/review/delete/' + review.review_id + '" class="btn-delete">Delete</a>'
+      html += '</div>'
+      html += '</li>'
+    })
+    html += '</ul>'
+  }
+  
+  html += '</div>'
+  return html
+}
+
+/* **************************************
+* Build the vehicle detail with correct name
+* ************************************ */
+Util.buildVehicleDetail = Util.buildInventoryDetail
 
 module.exports = Util
 

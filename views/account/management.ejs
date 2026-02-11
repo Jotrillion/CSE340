@@ -89,6 +89,8 @@
     
     <p><a class="update-account-link" href="/account/update/<%= locals.accountData.account_id %>">Update Account Information</a></p>
     
+    <p><a class="update-account-link" href="/review/user">Manage My Reviews</a></p>
+    
     <% if (locals.accountData.account_type === "Employee" || locals.accountData.account_type === "Admin") { %>
         <h3>Inventory Management</h3>
         <p><a href="/inv/">Manage Inventory</a></p>

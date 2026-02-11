@@ -1,0 +1,160 @@
+<style>
+    .edit-review-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .edit-review-container h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .vehicle-info {
+        background: white;
+        padding: 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+        border-left: 4px solid #007BFF;
+    }
+
+    .vehicle-info h3 {
+        color: #007BFF;
+        margin: 0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #333;
+    }
+
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1em;
+        font-family: inherit;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+    }
+
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+    }
+
+    .btn-submit,
+    .btn-cancel {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-submit:hover {
+        background-color: #218838;
+    }
+
+    .btn-cancel {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-cancel:hover {
+        background-color: #5a6268;
+    }
+
+    .notice {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .errors {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 12px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+    .errors ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+</style>
+
+<div class="edit-review-container">
+    <h1><%= title %></h1>
+    
+    <% if (locals.notice) { %>
+        <p class="notice"><%= Array.isArray(locals.notice) ? locals.notice.join(', ') : locals.notice %></p>
+    <% } %>
+
+    <% if (errors) { %>
+        <div class="errors">
+            <ul>
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+            </ul>
+        </div>
+    <% } %>
+
+    <div class="vehicle-info">
+        <h3><%= inv_year %> <%= inv_make %> <%= inv_model %></h3>
+    </div>
+
+    <form action="/review/update" method="post">
+        <input type="hidden" name="review_id" value="<%= review_id %>">
+        
+        <div class="form-group">
+            <label for="review_rating">Rating:</label>
+            <select id="review_rating" name="review_rating" required>
+                <option value="">Select a rating</option>
+                <option value="5" <%= review_rating == 5 ? 'selected' : '' %>>5 - Excellent</option>
+                <option value="4" <%= review_rating == 4 ? 'selected' : '' %>>4 - Very Good</option>
+                <option value="3" <%= review_rating == 3 ? 'selected' : '' %>>3 - Good</option>
+                <option value="2" <%= review_rating == 2 ? 'selected' : '' %>>2 - Fair</option>
+                <option value="1" <%= review_rating == 1 ? 'selected' : '' %>>1 - Poor</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="review_text">Your Review:</label>
+            <textarea id="review_text" name="review_text" rows="6" required minlength="10" maxlength="1000"><%= review_text %></textarea>
+            <small>Review must be between 10 and 1000 characters.</small>
+        </div>
+        
+        <div class="form-actions">
+            <a href="/account/reviews" class="btn-cancel">Cancel</a>
+            <button type="submit" class="btn-submit">Update Review</button>
+        </div>
+    </form>
+</div>

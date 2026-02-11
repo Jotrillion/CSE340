@@ -148,6 +148,17 @@ invCont.addInventory = async function (req, res, next) {
 invCont.buildByClassificationId = async function (req, res, next) {
   const classification_id = req.params.classificationId
   const data = await invModel.getInventoryByClassificationId(classification_id)
+  
+  if (!data || data.length === 0) {
+    let nav = await utilities.getNav()
+    req.flash("notice", "No vehicles found for this classification.")
+    return res.status(404).render("errors/error", {
+      title: "Classification Not Found",
+      message: "Sorry, we couldn't find any vehicles in this classification.",
+      nav
+    })
+  }
+  
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
   const className = data[0].classification_name
@@ -167,10 +178,24 @@ invCont.buildByInventoryId = async function (req, res, next) {
   const detail = await utilities.buildInventoryDetail(data)
   let nav = await utilities.getNav()
   const vehicleName = `${data.inv_year} ${data.inv_make} ${data.inv_model}`
+  
+  // Get reviews for this vehicle (with error handling if table doesn't exist)
+  let reviewsHTML = ''
+  try {
+    const reviewModel = require("../models/review-model")
+    const reviews = await reviewModel.getReviewsByInventoryId(inv_id)
+    const reviewStats = await reviewModel.getAverageRating(inv_id)
+    reviewsHTML = await utilities.buildReviewsHTML(reviews, reviewStats, res.locals.accountData, inv_id)
+  } catch (error) {
+    console.error("Review error (table may not exist yet):", error.message)
+    reviewsHTML = '' // No reviews section if table doesn't exist
+  }
+  
   res.render("./inventory/detail", {
     title: vehicleName,
     nav,
     detail,
+    reviewsHTML,
   })
 }
 

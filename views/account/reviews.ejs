@@ -1,0 +1,88 @@
+<style>
+    .user-reviews-section {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .user-reviews-section h1 {
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    .user-reviews-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .user-review-item {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .review-vehicle-info h3 {
+        color: #007BFF;
+        margin: 0 0 10px 0;
+    }
+
+    .review-rating {
+        color: #FFB800;
+        font-size: 1.2em;
+        margin-right: 10px;
+    }
+
+    .review-date {
+        color: #666;
+        font-size: 0.9em;
+    }
+
+    .review-text {
+        margin: 15px 0;
+        line-height: 1.6;
+    }
+
+    .review-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    .btn-edit, .btn-delete {
+        padding: 8px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .btn-edit {
+        background-color: #007BFF;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<div class="user-reviews-section">
+    <h1><%= title %></h1>
+    
+    <% if (locals.notice) { %>
+        <p class="notice"><%= Array.isArray(locals.notice) ? locals.notice.join(', ') : locals.notice %></p>
+    <% } %>
+    
+    <%- reviewsHTML %>
+</div>
